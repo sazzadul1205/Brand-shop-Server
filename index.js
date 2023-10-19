@@ -38,21 +38,12 @@ async function run() {
       res.send(result);
     })
 
-
-    // view individual products
-
-
     // insert a item to DB
     app.post('/product', async (req, res) => {
       const newCoffee = req.body;
       const result = await ProductCollection.insertOne(newCoffee);
       res.send(result);
     })
-
-
-
-
-
 
     // view brands
     // samsung
@@ -90,7 +81,7 @@ async function run() {
       const NokiaProducts = result.filter(product => product.brand == 'Nokia');
       res.send(NokiaProducts);
     });
-    // Nokia
+    // intel
     app.get('/product/intel', async (req, res) => {
       const cursor = ProductCollection.find();
       const result = await cursor.toArray();
@@ -98,7 +89,7 @@ async function run() {
       res.send(IntelProducts);
     });
 
-    // products
+    // view indivisula products from brand
     app.get('/product/samsung/:id', async (req, res) => {
       const id = req.params.id;
       const query = { _id: new ObjectId(id) }
@@ -292,6 +283,52 @@ async function run() {
       const result = await ProductCollection.updateOne(filter, samsung, options);
       res.send(result);
     });
+
+
+    // delete product
+    app.delete('/product/samsung/:id', async (req, res) => {
+      const id = req.params.id;
+      const query = { _id: new ObjectId(id) }
+      const result = await ProductCollection.deleteOne(query);
+      res.send(result);
+    })
+    //
+    app.delete('/product/apple/:id', async (req, res) => {
+      const id = req.params.id;
+      const query = { _id: new ObjectId(id) }
+      const result = await ProductCollection.deleteOne(query);
+      res.send(result);
+    })
+    //
+    app.delete('/product/oppo/:id', async (req, res) => {
+      const id = req.params.id;
+      const query = { _id: new ObjectId(id) }
+      const result = await ProductCollection.deleteOne(query);
+      res.send(result);
+    })
+    //
+    app.delete('/product/asus/:id', async (req, res) => {
+      const id = req.params.id;
+      const query = { _id: new ObjectId(id) }
+      const result = await ProductCollection.deleteOne(query);
+      res.send(result);
+    })
+    //
+    app.delete('/product/intel/:id', async (req, res) => {
+      const id = req.params.id;
+      const query = { _id: new ObjectId(id) }
+      const result = await ProductCollection.deleteOne(query);
+      res.send(result);
+    })
+    //
+    app.delete('/product/nokia/:id', async (req, res) => {
+      const id = req.params.id;
+      const query = { _id: new ObjectId(id) }
+      const result = await ProductCollection.deleteOne(query);
+      res.send(result);
+    })
+
+
 
 
     // Send a ping to confirm a successful connection
