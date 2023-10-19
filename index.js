@@ -39,97 +39,22 @@ async function run() {
       res.send(result);
     })
 
+    // view product by id
+    app.get('/product/:id', async (req, res) => {
+      const id = req.params.id;
+      const query = { _id: new ObjectId(id) }
+      const result = await ProductCollection.findOne(query)
+      res.send(result);
+    })
+
     // insert a item to DB
     app.post('/product', async (req, res) => {
       const newCoffee = req.body;
       const result = await ProductCollection.insertOne(newCoffee);
       res.send(result);
     })
-
-    // view brands
-    // samsung
-    app.get('/product/samsung', async (req, res) => {
-      const cursor = ProductCollection.find();
-      const result = await cursor.toArray();
-      const samsungProducts = result.filter(product => product.brand == 'Samsung');
-      res.send(samsungProducts);
-    });
-    // Apple
-    app.get('/product/apple', async (req, res) => {
-      const cursor = ProductCollection.find();
-      const result = await cursor.toArray();
-      const appleProducts = result.filter(product => product.brand == 'Apple');
-      res.send(appleProducts);
-    });
-    // Asus
-    app.get('/product/asus', async (req, res) => {
-      const cursor = ProductCollection.find();
-      const result = await cursor.toArray();
-      const asusProducts = result.filter(product => product.brand == 'Asus');
-      res.send(asusProducts);
-    });
-    // Oppo
-    app.get('/product/oppo', async (req, res) => {
-      const cursor = ProductCollection.find();
-      const result = await cursor.toArray();
-      const oppoProducts = result.filter(product => product.brand == 'Oppo');
-      res.send(oppoProducts);
-    });
-    // Nokia
-    app.get('/product/nokia', async (req, res) => {
-      const cursor = ProductCollection.find();
-      const result = await cursor.toArray();
-      const NokiaProducts = result.filter(product => product.brand == 'Nokia');
-      res.send(NokiaProducts);
-    });
-    // intel
-    app.get('/product/intel', async (req, res) => {
-      const cursor = ProductCollection.find();
-      const result = await cursor.toArray();
-      const IntelProducts = result.filter(product => product.brand == 'intel');
-      res.send(IntelProducts);
-    });
-
-    // view indivisula products from brand
-    app.get('/product/samsung/:id', async (req, res) => {
-      const id = req.params.id;
-      const query = { _id: new ObjectId(id) }
-      const result = await ProductCollection.findOne(query)
-      res.send(result);
-    })
-    app.get('/product/apple/:id', async (req, res) => {
-      const id = req.params.id;
-      const query = { _id: new ObjectId(id) }
-      const result = await ProductCollection.findOne(query)
-      res.send(result);
-    })
-    app.get('/product/oppo/:id', async (req, res) => {
-      const id = req.params.id;
-      const query = { _id: new ObjectId(id) }
-      const result = await ProductCollection.findOne(query)
-      res.send(result);
-    })
-    app.get('/product/asus/:id', async (req, res) => {
-      const id = req.params.id;
-      const query = { _id: new ObjectId(id) }
-      const result = await ProductCollection.findOne(query)
-      res.send(result);
-    })
-    app.get('/product/intel/:id', async (req, res) => {
-      const id = req.params.id;
-      const query = { _id: new ObjectId(id) }
-      const result = await ProductCollection.findOne(query)
-      res.send(result);
-    })
-    app.get('/product/nokia/:id', async (req, res) => {
-      const id = req.params.id;
-      const query = { _id: new ObjectId(id) }
-      const result = await ProductCollection.findOne(query)
-      res.send(result);
-    })
-
     // Update a Product
-    app.put('/product/samsung/:id', async (req, res) => {
+    app.put('/product/:id', async (req, res) => {
       const id = req.params.id;
       const filter = { _id: new ObjectId(id) };
       const options = { upsert: true };
@@ -154,180 +79,17 @@ async function run() {
       const result = await ProductCollection.updateOne(filter, samsung, options);
       res.send(result);
     });
-    // 
-    app.put('/product/apple/:id', async (req, res) => {
-      const id = req.params.id;
-      const filter = { _id: new ObjectId(id) };
-      const options = { upsert: true };
-      const updatedProduct = req.body;
-      const samsung = {
-        $set: {
-          name: updatedProduct.name,
-          brand: updatedProduct.brand,
-          type: updatedProduct.type,
-          price: updatedProduct.price,
-          rating: updatedProduct.rating,
-          supply: updatedProduct.supply,
-          description: updatedProduct.description,
-          photo: updatedProduct.photo,
-          ram: updatedProduct.ram,
-          rom: updatedProduct.rom,
-          battery: updatedProduct.battery,
-          display: updatedProduct.display,
-
-        }
-      };
-      const result = await ProductCollection.updateOne(filter, samsung, options);
-      res.send(result);
-    });
-    // 
-    app.put('/product/oppo/:id', async (req, res) => {
-      const id = req.params.id;
-      const filter = { _id: new ObjectId(id) };
-      const options = { upsert: true };
-      const updatedProduct = req.body;
-      const samsung = {
-        $set: {
-          name: updatedProduct.name,
-          brand: updatedProduct.brand,
-          type: updatedProduct.type,
-          price: updatedProduct.price,
-          rating: updatedProduct.rating,
-          supply: updatedProduct.supply,
-          description: updatedProduct.description,
-          photo: updatedProduct.photo,
-          ram: updatedProduct.ram,
-          rom: updatedProduct.rom,
-          battery: updatedProduct.battery,
-          display: updatedProduct.display,
-
-        }
-      };
-      const result = await ProductCollection.updateOne(filter, samsung, options);
-      res.send(result);
-    });
-    // 
-    app.put('/product/asus/:id', async (req, res) => {
-      const id = req.params.id;
-      const filter = { _id: new ObjectId(id) };
-      const options = { upsert: true };
-      const updatedProduct = req.body;
-      const samsung = {
-        $set: {
-          name: updatedProduct.name,
-          brand: updatedProduct.brand,
-          type: updatedProduct.type,
-          price: updatedProduct.price,
-          rating: updatedProduct.rating,
-          supply: updatedProduct.supply,
-          description: updatedProduct.description,
-          photo: updatedProduct.photo,
-          ram: updatedProduct.ram,
-          rom: updatedProduct.rom,
-          battery: updatedProduct.battery,
-          display: updatedProduct.display,
-
-        }
-      };
-      const result = await ProductCollection.updateOne(filter, samsung, options);
-      res.send(result);
-    });
-    // 
-    app.put('/product/intel/:id', async (req, res) => {
-      const id = req.params.id;
-      const filter = { _id: new ObjectId(id) };
-      const options = { upsert: true };
-      const updatedProduct = req.body;
-      const samsung = {
-        $set: {
-          name: updatedProduct.name,
-          brand: updatedProduct.brand,
-          type: updatedProduct.type,
-          price: updatedProduct.price,
-          rating: updatedProduct.rating,
-          supply: updatedProduct.supply,
-          description: updatedProduct.description,
-          photo: updatedProduct.photo,
-          ram: updatedProduct.ram,
-          rom: updatedProduct.rom,
-          battery: updatedProduct.battery,
-          display: updatedProduct.display,
-
-        }
-      };
-      const result = await ProductCollection.updateOne(filter, samsung, options);
-      res.send(result);
-    });
-    // 
-    app.put('/product/nokia/:id', async (req, res) => {
-      const id = req.params.id;
-      const filter = { _id: new ObjectId(id) };
-      const options = { upsert: true };
-      const updatedProduct = req.body;
-      const samsung = {
-        $set: {
-          name: updatedProduct.name,
-          brand: updatedProduct.brand,
-          type: updatedProduct.type,
-          price: updatedProduct.price,
-          rating: updatedProduct.rating,
-          supply: updatedProduct.supply,
-          description: updatedProduct.description,
-          photo: updatedProduct.photo,
-          ram: updatedProduct.ram,
-          rom: updatedProduct.rom,
-          battery: updatedProduct.battery,
-          display: updatedProduct.display,
-
-        }
-      };
-      const result = await ProductCollection.updateOne(filter, samsung, options);
-      res.send(result);
-    });
-
 
     // delete product
-    app.delete('/product/samsung/:id', async (req, res) => {
+    app.delete('/product/:id', async (req, res) => {
       const id = req.params.id;
       const query = { _id: new ObjectId(id) }
       const result = await ProductCollection.deleteOne(query);
       res.send(result);
     })
-    //
-    app.delete('/product/apple/:id', async (req, res) => {
-      const id = req.params.id;
-      const query = { _id: new ObjectId(id) }
-      const result = await ProductCollection.deleteOne(query);
-      res.send(result);
-    })
-    //
-    app.delete('/product/oppo/:id', async (req, res) => {
-      const id = req.params.id;
-      const query = { _id: new ObjectId(id) }
-      const result = await ProductCollection.deleteOne(query);
-      res.send(result);
-    })
-    //
-    app.delete('/product/asus/:id', async (req, res) => {
-      const id = req.params.id;
-      const query = { _id: new ObjectId(id) }
-      const result = await ProductCollection.deleteOne(query);
-      res.send(result);
-    })
-    //
-    app.delete('/product/intel/:id', async (req, res) => {
-      const id = req.params.id;
-      const query = { _id: new ObjectId(id) }
-      const result = await ProductCollection.deleteOne(query);
-      res.send(result);
-    })
-    //
-    app.delete('/product/nokia/:id', async (req, res) => {
-      const id = req.params.id;
-      const query = { _id: new ObjectId(id) }
-      const result = await ProductCollection.deleteOne(query);
-      res.send(result);
-    })
+
+
+
 
     // user section
 
@@ -346,22 +108,54 @@ async function run() {
       res.send(result);
     })
 
-    app.put('/user/:id', async (req, res) => {
-      const email = req.params.id;
-      const filter = { email: email };
-      const options = { upsert: true };
-      const updatedProduct = req.body;
-      
-      const updatedDoc = {
-        $set: {
-          updatedProduct
+    // app.put('/user/:id', async (req, res) => {
+    //   const email = req.params.id;
+    //   const filter = { email: email };
+    //   const options = { upsert: true };
+    //   const updatedProduct = req.body;
 
+    //   const updatedDoc = {
+    //     $set: {
+    //       updatedProduct 
+
+    //     }
+    //   };
+    //   const result = await UserCollection.updateOne(filter, updatedDoc , options );
+
+    //   res.send(result);
+    // });
+
+    app.put('/user/:id', async (req, res) => {
+      try {
+        const email = req.params.id;
+        const filter = { email: email };
+        const existingUser = await UserCollection.findOne(filter);
+
+        // If the user doesn't exist, create a new cart for the user
+        if (!existingUser) {
+          const newUser = {
+            email: email,
+            cart: [req.body] // Add the new product to the cart
+          };
+          await UserCollection.insertOne(newUser);
+          res.send({ message: 'User created with the new product.' });
+        } else {
+          // If the user already has a cart, update the cart with the new product
+          const updatedCart = [...existingUser.cart, req.body];
+          const updatedDoc = {
+            $set: {
+              cart: updatedCart
+            }
+          };
+          const result = await UserCollection.updateOne(filter, updatedDoc);
+          res.send({ message: 'Product added to the cart successfully.' });
         }
-      };
-      const result = await UserCollection.updateOne(filter, updatedDoc , options );
-  
-      res.send(result);
+      } catch (error) {
+        console.error(error);
+        res.status(500).send({ message: 'Internal Server Error' });
+      }
     });
+
 
 
     // create a new user
@@ -381,11 +175,11 @@ async function run() {
           lastLoggedAt: user.lastLoggedAt,
         }
       };
-      const result = await UserCollection.updateOne(filter, updatedDoc); 
+      const result = await UserCollection.updateOne(filter, updatedDoc);
       res.send(result);
     });
-    
-    
+
+
 
     // Send a ping to confirm a successful connection
     await client.db("admin").command({ ping: 1 });
