@@ -1,7 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 require('dotenv').config();
-const { MongoClient, ServerApiVersion } = require('mongodb');
+const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
 
 const app = express();
 const port = process.env.PORT || 5000;
@@ -39,12 +39,42 @@ async function run() {
     })
 
     // view individual products
-    // app.get('/product/:id', async (req, res) => {
-    //   const id = req.params.id;
-    //   const query = { _id: new ObjectId(id) }
-    //   const result = await ProductCollection.findOne(query)
-    //   res.send(result);
-    // })
+    app.get('/product/samsung/:id', async (req, res) => {
+      const id = req.params.id;
+      const query = { _id: new ObjectId(id) }
+      const result = await ProductCollection.findOne(query)
+      res.send(result);
+    })
+    app.get('/product/apple/:id', async (req, res) => {
+      const id = req.params.id;
+      const query = { _id: new ObjectId(id) }
+      const result = await ProductCollection.findOne(query)
+      res.send(result);
+    })
+    app.get('/product/oppo/:id', async (req, res) => {
+      const id = req.params.id;
+      const query = { _id: new ObjectId(id) }
+      const result = await ProductCollection.findOne(query)
+      res.send(result);
+    })
+    app.get('/product/asus/:id', async (req, res) => {
+      const id = req.params.id;
+      const query = { _id: new ObjectId(id) }
+      const result = await ProductCollection.findOne(query)
+      res.send(result);
+    })
+    app.get('/product/intel/:id', async (req, res) => {
+      const id = req.params.id;
+      const query = { _id: new ObjectId(id) }
+      const result = await ProductCollection.findOne(query)
+      res.send(result);
+    })
+    app.get('/product/nokia/:id', async (req, res) => {
+      const id = req.params.id;
+      const query = { _id: new ObjectId(id) }
+      const result = await ProductCollection.findOne(query)
+      res.send(result);
+    })
 
     // upload a item to DB
     app.post('/product', async (req, res) => {
@@ -90,6 +120,13 @@ async function run() {
         const result = await cursor.toArray();
         const NokiaProducts = result.filter(product => product.brand == 'Nokia');
         res.send(NokiaProducts);
+    });
+    // Nokia
+    app.get('/product/intel', async (req, res) => {
+        const cursor = ProductCollection.find();
+        const result = await cursor.toArray();
+        const IntelProducts = result.filter(product => product.brand == 'intel');
+        res.send(IntelProducts);
     });
 
     // Send a ping to confirm a successful connection
