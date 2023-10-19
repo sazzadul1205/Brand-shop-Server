@@ -346,17 +346,28 @@ async function run() {
       res.send(result);
     })
 
+    app.put('/user/:id', async (req, res) => {
+      const email = req.params.id;
+      const filter = { email: email };
+      const options = { upsert: true };
+      const updatedProduct = req.body;
+      
+      const updatedDoc = {
+        $set: {
+          updatedProduct
+
+        }
+      };
+      const result = await UserCollection.updateOne(filter, updatedDoc , options );
+  
+      res.send(result);
+    });
+
 
     // create a new user
     app.post('/user', async (req, res) => {
       const newUser = req.body;
       const result = await UserCollection.insertOne(newUser);
-      res.send(result);
-    })
-
-    app.post('  ', async (req, res) => {
-      const newProduct = req.body;
-      const result = await UserCollection.insertOne(newProduct);
       res.send(result);
     })
 
