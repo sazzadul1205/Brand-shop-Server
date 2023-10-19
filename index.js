@@ -29,6 +29,7 @@ async function run() {
 
     // database 
     const ProductCollection = client.db('productDB').collection('product');
+    const UserCollection = client.db('productDB').collection('user');
 
 
     // view all products
@@ -328,8 +329,52 @@ async function run() {
       res.send(result);
     })
 
+    // user section
+
+    // view all users
+    app.get('/user', async (req, res) => {
+      const cursor = UserCollection.find()
+      const result = await cursor.toArray()
+      res.send(result);
+    })
+
+    // view a individual user
+    app.get('/user/:id', async (req, res) => {
+      const id = req.params.id;
+      const query = { _id: new ObjectId(id) };
+      const result = await UserCollection.findOne(query);
+      res.send(result);
+    })
 
 
+    // create a new user
+    app.post('/user', async (req, res) => {
+      const newUser = req.body;
+      const result = await UserCollection.insertOne(newUser);
+      res.send(result);
+    })
+
+    app.post('  ', async (req, res) => {
+      const newProduct = req.body;
+      const result = await UserCollection.insertOne(newProduct);
+      res.send(result);
+    })
+
+    // modify/Update a user
+    app.patch('/user', async (req, res) => {
+      const email = req.body.email;
+      const filter = { email: email };
+      const user = req.body;
+      const updatedDoc = {
+        $set: {
+          lastLoggedAt: user.lastLoggedAt,
+        }
+      };
+      const result = await UserCollection.updateOne(filter, updatedDoc); 
+      res.send(result);
+    });
+    
+    
 
     // Send a ping to confirm a successful connection
     await client.db("admin").command({ ping: 1 });
