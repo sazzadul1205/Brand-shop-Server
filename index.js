@@ -88,9 +88,6 @@ async function run() {
       res.send(result);
     })
 
-
-
-
     // user section
 
     // view all users
@@ -108,52 +105,18 @@ async function run() {
       res.send(result);
     })
 
-    // app.put('/user/:id', async (req, res) => {
-    //   const email = req.params.id;
-    //   const filter = { email: email };
-    //   const options = { upsert: true };
-    //   const updatedProduct = req.body;
-
-    //   const updatedDoc = {
-    //     $set: {
-    //       updatedProduct 
-
-    //     }
-    //   };
-    //   const result = await UserCollection.updateOne(filter, updatedDoc , options );
-
-    //   res.send(result);
-    // });
-
     app.put('/user/:id', async (req, res) => {
-      try {
-        const email = req.params.id;
-        const filter = { email: email };
-        const existingUser = await UserCollection.findOne(filter);
+      const email = req.params.id;
+      const filter = { email: email };
+      const options = { upsert: true };
+      const updatedProduct = req.body;
 
-        // If the user doesn't exist, create a new cart for the user
-        if (!existingUser) {
-          const newUser = {
-            email: email,
-            cart: [req.body] // Add the new product to the cart
-          };
-          await UserCollection.insertOne(newUser);
-          res.send({ message: 'User created with the new product.' });
-        } else {
-          // If the user already has a cart, update the cart with the new product
-          const updatedCart = [...existingUser.cart, req.body];
-          const updatedDoc = {
-            $set: {
-              cart: updatedCart
-            }
-          };
-          const result = await UserCollection.updateOne(filter, updatedDoc);
-          res.send({ message: 'Product added to the cart successfully.' });
-        }
-      } catch (error) {
-        console.error(error);
-        res.status(500).send({ message: 'Internal Server Error' });
-      }
+      const updatedDoc = {
+        $push: updatedProduct
+        
+      };
+      const result = await UserCollection.updateOne(filter, updatedDoc, options);
+      res.send(result);
     });
 
 
